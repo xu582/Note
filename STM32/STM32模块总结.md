@@ -142,3 +142,16 @@ void USART2_printf (char *s, ...) // 形参 “ ... ” 为可变参数。
 7. WIFI透传
 8. 向电脑网络助手上传DHT11温湿度
 9. 手机APP控制
+
+### 4. HC05模块
+
+[https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/port_class/hc05.html](https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/port_class/hc05.html)
+
+1. 简介
+   - 采用蓝牙2.0协议，可与任何版本的蓝牙兼容通讯， 包括与具有蓝牙功能的电脑、蓝牙主机、手机、PDA、PSP等终端配对，可实现串口透传功能。 驱动HC05模块时只需要使用TTL电平标准的串口即可(5V/3.3V电压均可)，支持的波特率范围为4800~1382400，非常适合用于单片机系统扩展蓝牙特性。(参考[https://doc.embedfire.com/products/link/zh/latest/module/bluetooth/hc05.html](https://doc.embedfire.com/products/link/zh/latest/module/bluetooth/hc05.html))
+
+### 5. GPS模块
+
+[https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/port_class/gps.html](https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/port_class/gps.html)
+
+[https://doc.embedfire.com/products/link/zh/latest/module/gps/beidou_atgm332d.html?highlight=gps。](https://doc.embedfire.com/products/link/zh/latest/module/gps/beidou_atgm332d.html?highlight=gps。)
