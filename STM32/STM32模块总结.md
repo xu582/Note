@@ -50,3 +50,59 @@
 
 3. 1838红外遥控模块
    - 红外遥控是一种无线、非接触控制技术，具有抗干扰能力强，信息传输可靠，功耗低，成本低，易实现等显著优点(参考[红外遥控简介](https://baike.baidu.com/item/%E7%BA%A2%E5%A4%96%E9%81%A5%E6%8E%A7/10186908?fr=aladdin))
+
+## 串口通讯
+
+### 1. 串口外设
+
+1. 串口通讯协议
+   - 串口通讯(Serial Communication)是一种设备之间非常常用的串行通讯方式，因为它简单便捷，大部分电子设备都支持该通讯方式，电子工程师在调试设备时也经常使用该通讯方式输出调试信息。芯片被分为内核层和片上外设；STM32 HAL库则是在寄存器与用户代码之间的软件层。对于通讯协议，分为物理层和协议层，物理层规定通讯系统中具有机械、电子功能部分的特性，确保原始数据在物理媒体的传输。协议层主要规定通讯逻辑，统一收发双方的数据打包、解包标准。
+   - 物理层 ：
+     - 电平标准
+     - RS-232信号线
+   - 协议层
+     - 波特率
+     - 通讯起始和停止信号
+     - 有效数据
+     - 数据校验
+
+2. USART
+
+### 2. 多个串口使用
+
+- 每一类STM32单片机上都有多个串口，每个串口独立工作，比如可以用串口2与要控制的模块连接，将收到的数据通过串口1发送到电脑或者另一块单片机，还有就是printf功能，他可以映射到任何一个串口上
+
+```C
+//重定义fputc函数，方便使用printf
+ int fputc(int Data, FILE *f)
+ {
+     while(!USART_GetFlagStatus(USART1,USART_FLAG_TXE));       //USART_GetFlagStatus：得到发送状态位
+                                                               //USART_FLAG_TXE:发送寄存器为空 1：为空；0：忙状态
+     USART_SendData(USART1,Data);                              //发送一个字符
+
+     return Data;                                              //返回一个值
+ }
+```
+
+- 在我们使用printf函数的时候，首先必须重定义fputc函数，在这个函数中，实现数据的发送，然后在USART_SendData(USART1,Data);中选择需要的串口。一般选择串口1，所以这种情况下，使用printf()函数会打印到串口1.也可以使用串口2的printf(),配置和串口1是一样的
+  1. 配置usart2的串口设置，使能管脚、串口2时钟
+  2. 勾选usb micro lib
+  3. 添加头文件 #include<stdarg.h> ,编写USART2的printf函数
+
+```C
+void USART2_printf (char *s, ...) // 形参 “ ... ” 为可变参数。
+ {
+     char buffer[BUFFER_LEN+1];  // BUFFER_LEN 缓冲区长度
+     u8 i = 0;
+
+     va_list arg_ptr;
+     va_start(arg_ptr, s);
+     vsnprintf(buffer, BUFFER_LEN+1, s, arg_ptr);
+     while ((i < BUFFER_LEN) && buffer)
+     {
+             USART_SendData(USART2, (u8) buffer[i++]);
+             while (USART_GetFlagStatus(USART2, USART_FLAG_TC) == RESET);
+     }
+     va_end(arg_ptr);
+ }
+```
