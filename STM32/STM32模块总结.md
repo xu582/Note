@@ -34,3 +34,19 @@
 ### 3. 普通IO反应模块程序流程思路
 
 1. 继电器(参考[https://www.zhihu.com/question/37052790](https://www.zhihu.com/question/37052790))
+   - 编写继电器驱动时，考虑到更改硬件环境的情况。建议把继电器检测引脚相关的宏定义到头文件
+   - 程序运行第一件事，就是将用到的外设初始化。
+
+2. 光敏
+   - 光敏电阻，就是遇到不同的光强，电阻的阻值不同
+
+### 4. 单总线协议模块 
+
+1. DS18B20
+   - DS18B20是常用的数字温度传感器，其输出的是数字信号，具有体积小，硬件开销低，抗干扰能力强，精度高的特点（参考[https://baike.baidu.com/item/DS18B20/10295269?fr=aladdin](https://baike.baidu.com/item/DS18B20/10295269?fr=aladdin)）
+
+2. DHT11温湿度传感器
+   - DHT11是一款有已校准数字信号输出的温湿度传感器（参考[https://baike.sogou.com/v73984313.htm?fromTitle=DHT11](https://baike.sogou.com/v73984313.htm?fromTitle=DHT11)）
+
+3. 1838红外遥控模块
+   - 红外遥控是一种无线、非接触控制技术，具有抗干扰能力强，信息传输可靠，功耗低，成本低，易实现等显著优点(参考[红外遥控简介](https://baike.baidu.com/item/%E7%BA%A2%E5%A4%96%E9%81%A5%E6%8E%A7/10186908?fr=aladdin))
