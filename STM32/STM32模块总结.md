@@ -155,3 +155,23 @@ void USART2_printf (char *s, ...) // 形参 “ ... ” 为可变参数。
 [https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/port_class/gps.html](https://doc.embedfire.com/module/module_tutorial/zh/latest/Module_Manual/port_class/gps.html)
 
 [https://doc.embedfire.com/products/link/zh/latest/module/gps/beidou_atgm332d.html?highlight=gps。](https://doc.embedfire.com/products/link/zh/latest/module/gps/beidou_atgm332d.html?highlight=gps。)
+
+## SPI通讯类模块
+
+1. 协议
+   - SPI协议是由摩托罗拉公司提出的通讯协议(Serial Peripheral Interface)，即串行外围设备接口， 是一种高速全双工的通信总线。它被广泛地使用在ADC、LCD等设备与MCU间，要求通讯速率较高的场合。
+   - 物理层(3条总线及片选)
+     1. SS(Slave Select)
+     2. SCK
+     3. MOSI
+     4. MISO
+   - 与 I2C 的类似，SPI 协议定义了通讯的起始和停止信号、数据有效性、时钟同步等环节
+     - 这是一个主机的通讯时序。NSS、SCK、MOSI 信号都由主机控制产生，而 MISO 的信号由从机产生， 主机通过该信号线读取从机的数据。MOSI 与 MISO 的信号只在 NSS 为低电平的时候才有效， 在 SCK 的每个时钟周期 MOSI 和 MISO 传输一位数据
+
+2. STM32的SPI特性及架构
+   - 与 I2C 外设一样，STM32 芯片也集成了专门用于 SPI 协议通讯的外设
+   - STM32的SPI外设可用作通讯的主机及从机，支持最高的SCK时钟频率为fpclk/2 (STM32F103型号的芯片默认f:sub:pclk1为72MHz，fpclk2为36MHz)， 完全支持SPI协议的4种模式，数据帧长度可设置为8位或16位，可设置数据MSB先行或LSB先行。 它还支持双线全双工(前面小节说明的都是这种模式)、双线单向以及单线模式。其中双线单向模式可以同时使用MOSI及MISO数据线向一个方向传输数据，可以加快一倍的传输速度。而单线模式则可以减少硬件接线，当然这样速率会受到影响
+
+3. 软件SPI与硬件SPI区别
+   - 软件SPI需要用IO口模拟时序，这个模拟过程全部由CPU完成，为了能稳定的存入数据，可能插入软件延时，这个时间在读取数据量小的情况下不明显， 但是基本上你在读取过程中其他非中断、非异常程序是无法得到执行的
+   - 硬件SPI数据存储过程是不需要CPU参与的，程序中配置好SPI的访问时序，开启中断，CPU就可以在中断函数中搬移数据，省下了软件模拟IO的存取时间
