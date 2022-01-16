@@ -54,7 +54,7 @@ int add(int a, int b)
 int main()
 {
     printf("app start\n");
-    T_EMTest * m_EMTest = addFunc(add, 1, 2, 3);
+    T_EMTest *m_EMTest = addFunc(add, 1, 2, 3);
     runEMTest(m_EMTest);
     return 0;
 }
