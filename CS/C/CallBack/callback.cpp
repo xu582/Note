@@ -33,8 +33,7 @@ void run()
 }
 
 // 用户代码
-void callBack(int status)
-{
+void callBack(int status){
     printf("callBack\n");
     printf("status = %d\n", status);
 }
