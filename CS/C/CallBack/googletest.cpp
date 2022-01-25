@@ -2,7 +2,7 @@
  * @Author: Kinoko 
  * @Date: 2021-12-26 18:26:26 
  * @Last Modified by: Kinoko
- * @Last Modified time: 2021-12-26 18:35:03
+ * @Last Modified time: 2022-01-25 10:48:15
  */
 
 #include <stdio.h>
@@ -36,7 +36,7 @@ void runEMTest(T_EMTest *p_EMTest)
         int count = p_EMTest->TestEMFunc(p_EMTest->a, p_EMTest->b);
         if (count == p_EMTest->output)
         {
-            printf(" succes \n");
+            printf(" success \n");
         }
         else
         {
@@ -53,7 +53,7 @@ int add(int a, int b)
 
 int main()
 {
-    printf("app start\n");
+    printf(" app start...\n");
     T_EMTest *m_EMTest = addFunc(add, 1, 2, 3);
     runEMTest(m_EMTest);
     return 0;
