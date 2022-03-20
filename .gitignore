@@ -1,0 +1,14 @@
+# 文件名称 .gitignore
+
+# test.md 文件
+test.md
+
+# Config 目录下的所有 .cpp 文件
+/Config/*.cpp
+
+# BMS/IDLE 目录下的所有 secret.yml 文件
+secret.yml
+
+# CS/CompositionPrinciple
+/CS/CompositionPrinciple/README_CP.md
+# /CS/CompositionPrinciple/数据的表示与运算.md
